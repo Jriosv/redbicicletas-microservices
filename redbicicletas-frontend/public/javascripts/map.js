@@ -4,9 +4,10 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://wwww.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
+
 $.ajax({
     datatype: "json",
-    url: "http://localhost:5000/api/bicicletas",
+    url: "http://map-service:8000/api/ubicacion",
     success: function (results) {
       console.log(results);
       results.bicicletas.forEach(function (bici) {

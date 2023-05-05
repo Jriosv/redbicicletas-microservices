@@ -13,6 +13,7 @@ exports.list = function (req, res) {
 };
 
 exports.add = function (req, res) {
+  console.log(req);
   var bici = new Bicicleta({id:req.body.id, 
     color: req.body.color,
     modelo: req.body.modelo,
@@ -24,6 +25,7 @@ exports.add = function (req, res) {
     res.status(200).json('bicicleta creada correctamente');
   })
   .catch((error) => {
+    console.log(error);
     res.status(500).json(error);
   });
 };

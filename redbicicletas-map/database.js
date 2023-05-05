@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 async function connect() {
   try {
-    await mongoose.connect('mongodb://mongo-crud:27017/crud', {
+    await mongoose.connect('mongodb://mongo-map:27017/map', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

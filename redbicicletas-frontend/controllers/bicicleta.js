@@ -1,19 +1,18 @@
 const Bicicleta = require("../models/bicicleta");
 const request = require('request');
 
-const crudServiceUrl = "http://localhost:5000/api/"
+const crudServiceUrl = "http://crud-service:5000/api/"
+const mapServiceUrl = "http://map-service:8000/api/"
 
 exports.list = function (re, res) {
     const requestOptions = {
         url: crudServiceUrl + "bicicletas",
         method: 'GET',
-        json: {},
-        qs: {
-          offset: 20
-        }
+        json: {}
       };
       request(requestOptions, (err, response, body) => {
         if (err) {
+          console.log(err);
           res.render("error", {msg:"An error ocurred trying to consume bycicles CRUD microservice"})
         } else if (response.statusCode === 200) {
           var bicis = body.bicicletas;
@@ -35,10 +34,43 @@ exports.create_get = function (req, res) {
 };
 
 exports.create_post = function (req, res) {
-    var bici = new Bicicleta(req.body.id, req.body.color, req.body.modelo);
-    bici.ubicacion = [req.body.lat, req.body.lng];
-    Bicicleta.add(bici);
-    res.redirect("/bicicletas");
+  const requestOptionsBycicleta = {
+    url: crudServiceUrl + "bicicletas/create",
+    method: 'POST',
+    json: {id:parseInt(req.body.id),
+           color:req.body.color,
+           modelo: req.body.modelo,
+           lat:parseFloat(req.body.lat),
+           lng:parseFloat(req.body.lng)}
+  };
+  const requestOptionsUbicacion = {
+    url: mapServiceUrl + "ubicacion/create",
+    method: 'POST',
+    json: {id:parseInt(req.body.id),
+           lat:parseFloat(req.body.lat),
+           lng:parseFloat(req.body.lng)}
+  };
+
+  request(requestOptionsUbicacion, (err, response, body) => {
+    if (err) {
+      console.log('Fallo con MAP microservice');
+    } else if (response.statusCode === 200) {
+      console.log('Ubicación creada correctamente')
+    } else {
+      console.log(response);
+    }
+  });
+
+  request(requestOptionsBycicleta, (err, response, body) => {
+    if (err) {
+      res.render("error", {msg:"An error ocurred trying to consume bycicles CRUD microservice"})
+    } else if (response.statusCode === 200) {
+      res.redirect("/bicicletas");
+    } else {
+      console.log(response);
+    }
+  });
+
 };
 
 exports.delete = function (req, res) {

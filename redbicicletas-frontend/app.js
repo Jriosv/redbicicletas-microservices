@@ -10,7 +10,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
-var bicicletaRouter = require('./routes/bicicleta')
+var bicicletaRouter = require('./routes/bicicleta');
+
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use('/users', usersRouter);
 app.use('/login',loginRouter);
 app.use('/logout',logoutRouter);
 app.use('/bicicletas',bicicletaRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

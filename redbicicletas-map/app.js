@@ -3,19 +3,21 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
+//database
+const db = require('./database');
+db.connect()
+.then(() => {
+  console.log('conexión exitosa');
+})
+.catch((error) => {
+  console.log(error);
+});
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var logoutRouter = require('./routes/logout');
-var bicicletaRouter = require('./routes/bicicleta')
+var ubicacionAPIRouter = require("./routes/api/ubicacion");
 
 var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 //Middleware fot authentication
 app.use(express.json());
@@ -27,12 +29,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Enable CORS for all routes
+app.use(cors());
+
 //Routes
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/login',loginRouter);
-app.use('/logout',logoutRouter);
-app.use('/bicicletas',bicicletaRouter);
+app.use("/api/ubicacion", ubicacionAPIRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

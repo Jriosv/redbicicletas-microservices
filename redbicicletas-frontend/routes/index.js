@@ -8,9 +8,10 @@ const client = new OAuth2Client(CLIENT_ID);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let token = req.cookies['session-token']
-
   let user = {};
+  res.render('index', { title: 'Express', user: user});
+  //let token = req.cookies['session-token']
+  /*
   async function verify() {
     const ticket = await client.verifyIdToken({
         idToken: token,
@@ -27,8 +28,8 @@ router.get('/', function(req, res, next) {
       res.render('index', { title: 'Express', user: user});
   }).catch(err => {
     res.redirect('/login')
-  });
- 
+  });*/
+
 });
 
 module.exports = router;
