@@ -2,7 +2,13 @@ const mongoose = require('mongoose');
 
 async function connect() {
   try {
-    await mongoose.connect('mongodb://mongo-map:27017/map', {
+    var MONGO_URI = process.env.MONGO_URI;
+
+    if(MONGO_URI == null){
+      MONGO_URI =  'mongodb://localhost:27017';
+    };
+
+    await mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

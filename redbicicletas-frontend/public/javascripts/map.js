@@ -4,15 +4,14 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://wwww.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-
 $.ajax({
     datatype: "json",
     url: "http://map-service:8000/api/ubicacion",
     success: function (results) {
-      console.log(results);
-      results.bicicletas.forEach(function (bici) {
-        L.marker([bici.latitud,bici.longitud], {
-          title: "Bicicleta Nro: " + bici.id + "  Modelo: " + bici.modelo,
+      console.log(results.ubicaciones);
+      results.ubicaciones.forEach(function (ubicacion) {
+        L.marker([ubicacion.latitud,ubicacion.longitud], {
+          title: "Bicicleta Nro: " + ubicacion.id,
         }).addTo(map);
       });
     },

@@ -23,6 +23,7 @@ COPY . /app
 
 ENV NODE_ENV QA
 
+ENV CLIENT_ID  "1002985450292-dgq7n1gmo12l81ufbbaqspcn1id9cqfm.apps.googleusercontent.com"
 ENV PORT 3000
 
 EXPOSE 3000

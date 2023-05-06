@@ -1,0 +1,43 @@
+version: '3'
+networks:
+  default:
+    external:
+      name: my-network
+
+services:
+  frontend:
+    image: jriosv/redbicicletas-frontend
+    environment:
+      CRUD_URI: "http://crud-service:5000/api/"
+      MAP_URI: "http://map-service:8000/api/"
+    container_name: frontend
+    ports:
+      - 3000:3000
+
+  crud-service:
+    image: jriosv/redbicicletas-crud
+    environment:
+      MONGO_URI: "mongodb://mongo-crud:27017"
+    container_name: crud-service
+    ports:
+      - 5000:5000
+  
+  map-service:
+    image: jriosv/redbicicletas-map
+    environment:
+      MONGO_URI: "mongodb://mongo-map:27017"
+    container_name: map-service
+    ports:
+      - 8000:8000
+
+  mongo-crud:
+    image: mongo
+    container_name: mongo-crud
+    ports:
+      - 27017:27017
+  
+  mongo-map:
+    image: mongo
+    container_name: mongo-map
+    ports:
+      - 27018:27017

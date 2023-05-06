@@ -1,8 +1,17 @@
 const Bicicleta = require("../models/bicicleta");
 const request = require('request');
 
-const crudServiceUrl = "http://crud-service:5000/api/"
-const mapServiceUrl = "http://map-service:8000/api/"
+var crudServiceUrl = process.env.CRUD_URI;
+
+if(crudServiceUrl == null || crudServiceUrl == ""){
+  crudServiceUrl = "http://crud-service:5000/api/";
+};
+
+var mapServiceUrl = process.env.MAP_URI;
+
+if(mapServiceUrl == null || mapServiceUrl == ""){
+  mapServiceUrl = "http://map-service:8000/api/";
+};
 
 exports.list = function (re, res) {
     const requestOptions = {

@@ -9,6 +9,13 @@ spec:
   containers:
     - name: frontend
       image: jriosv/redbicicletas-frontend
+      env:
+      - name: CRUD_URI
+        value: "http://crud-service:5000/api/"
+      - name: MAP_URI
+        value: "http://map-service:8000/api/"
+      - name: AJAX_URI
+        value: "http://map-service:8000/api/ubicacion"
       ports:
         - containerPort: 3000
 
